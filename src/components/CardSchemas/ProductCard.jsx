@@ -25,6 +25,7 @@ const Card = styled.div`
     padding:20px;
     box-sizing: border-box;
     border-radius: 5px;
+    
     hr{
         margin:0;
         border:1px solid #e9e9e9;
@@ -33,10 +34,16 @@ const Card = styled.div`
 `
 
 const Image = styled.img`
-width: 100%;
+    width: 100%;
 `
 
 const Wrapper = styled.div`
-background-color: #fff;
-width: 100%;
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    transition: .4s;
+    &:hover{
+        transform: scale(105%);
+        box-shadow: 1px 6px 10px 2px rgb(0 0 0 / 50%);
+    }
 `
