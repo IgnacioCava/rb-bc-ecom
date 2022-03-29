@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import Searchbar from './Components/Searchbar/Searchbar'
 import styled from "styled-components"
 
 export default function Navbar(){
@@ -10,7 +9,6 @@ export default function Navbar(){
                     <Link to='/'>Home</Link>
                     <Link to='/admin'>Admin panel</Link>
             </Links>
-                <Searchbar/>
         </Nav>
     )
 }
