@@ -7,9 +7,7 @@ import Searchbar from "../Searchbar/Searchbar"
 export default function ProductHolder({products, admin}){
 
     const [scrollType, setType] = useState('page')
-    const [search, setSearch] = useState('')
-
-    console.log(search)
+    const [search, setSearch] = useState()
 
     useEffect(()=>{
         Array.from(document.getElementsByClassName('scrolltype')).map(button=>button.innerText.toLowerCase()===scrollType?button.style.backgroundColor='lightgrey':button.style.backgroundColor='transparent')
@@ -31,10 +29,11 @@ export default function ProductHolder({products, admin}){
                 <Searchbar search={setSearch}/>
             </Controls>
             
-            <Holder id='holder' onWheel={(e)=>{autoWheelScroll(e, 'holder', 'x', scrollType)}}>
+            <Holder id='holder' onWheel={(e)=>{if(e.target.className.includes('wrapper')) autoWheelScroll(e, 'holder', 'x', scrollType)}}>
                 {products.filter(e=>(search?e.title.includes(search):e)&&(admin?e:e.disabled===false)).map(product => {
                     return (
-                        <ProductCard 
+                        <ProductCard
+                            id={product.id}
                             admin={admin} 
                             product={product}
                             key={product.id} 
@@ -43,16 +42,14 @@ export default function ProductHolder({products, admin}){
                 })}
             </Holder>
         </SectionWrapper>
-        
     )
 }
 
 const Holder = styled.div`
     display: inline-flex;
     overflow: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-snap-stop:always;
     scroll-behavior: smooth;
+    height: 50%;
 `
 
 const Scrolls = styled.button`

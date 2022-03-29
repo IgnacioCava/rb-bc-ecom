@@ -8,8 +8,6 @@ export default function ProductList(){
 
     const {state, dispatch} = useContext(AppContext)
 
-    console.log(state)
-
     return (
         <List>
             <ProductsHolder products={state} admin/>

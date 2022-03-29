@@ -20,7 +20,7 @@ export default function validateProductForm(values) {
 
     if (!values.image) {
         errors.image = 'Required';
-    } else if(!values.image.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g)) {
+    } else if(!values.image.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|webp|svg|jpeg|apng|avif|tiff|raw|ai|psd)/g)) {
         errors.image = 'Must be a valid image URL';
     }
 

@@ -1,17 +1,18 @@
 import styled from "styled-components"
 
 export default function FormInput(props){
-    const {name, type, placeholder, error, eventHandlers, area} = props
-    let data = {name, type, placeholder, ...eventHandlers}
+    const {name, type, placeholder, error, eventHandlers, area, text} = props
+    let data = {name, type, value:text, placeholder, ...eventHandlers, error}
+
     return (
         <InputHolder>
             {type==='submit'
-                ?<ProductInput type={type} value='Create Product' {...eventHandlers}/>
+                ?<ProductInput style={{backgroundColor:'#6767ff', color:'white', fontWeight:'bold', cursor:'pointer'}} type={type} value='Create Product' {...eventHandlers}/>
                 :<>
                     <label htmlFor={name}>{placeholder}</label>
                     {area
                         ?<ProductDesc {...data}/>
-                        :<ProductInput {...data}/>}
+                        :<ProductInput error={error} {...data}/>}
                     <Error>{error[name]}</Error>
                 </>
             }
@@ -40,6 +41,9 @@ const InputHolder = styled.div`
         width: 100%;
         box-sizing: border-box;
         transition: 1s;
+        border:0;
+        outline:0;
+        background-color: white;
     }
 `
 

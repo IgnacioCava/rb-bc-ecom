@@ -7,7 +7,7 @@ export default function Navbar(){
             <h1>E-commerce</h1>
             <Links>
                     <Link to='/'>Home</Link>
-                    <Link to='/admin'>Admin panel</Link>
+                    <Link to='/admin/products'>Admin panel</Link>
             </Links>
         </Nav>
     )

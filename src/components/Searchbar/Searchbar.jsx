@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import { useState } from 'react'
 import styled from "styled-components"
 
@@ -25,26 +24,15 @@ const SearchForm = styled.form`
     box-shadow: ${props => props.focus ? '1px 3px 3px 2px #ccc' : '1px 2px 3px 1px #ccc'};
     transition: .5s;
     width: ${props => props.focus ? '30%' : '20%'};
+    padding:${props => props.focus ? '10px' : '5px'};
     &:hover{
         box-shadow: 1px 3px 3px 2px #ccc;
-    }
-    *{
-        border:0;
-        padding:${props => props.focus ? '10px' : '5px'};
-        transition: .25s ease-in;
     }
 `
 
 const SearchInput = styled.input`
     outline: none;
-    width: 80%;
-`
-
-const SubmitButton = styled.input`
-    background-color: white;
-    cursor:pointer;
-    width: fit-content;
-    &:active{
-        background-color: lightblue;
-    }
+    width: 100%;
+    border:0;
+    transition: .25s ease-in;
 `

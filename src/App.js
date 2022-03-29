@@ -13,9 +13,12 @@ export const AppContext = React.createContext()
 const initialState = []
 const productReducer = (state, action) => {
   switch (action.type) {
-
     case 'addProduct':
       return [...state, {...action.productData, disabled: false, id: state.length}];
+
+    case 'editProduct':
+      state[action.productData.id] = action.productData
+      return [...state]
 
     // I disable them instead of removing so that I can still see them in the admin's product list
     // Normal users won't be able to see disabled products
@@ -45,7 +48,7 @@ function App() {
           <Route path='/' element={<Homepage/>}/>
           <Route path='/admin' element={<AdminPanel/>}>
             <Route index path='*' element={<ProductList/>}/>
-            <Route path='addproduct' element={<CreateProduct/>}/>
+            <Route path='addproduct' element={<CreateProduct action='create'/>}/>
             <Route path='edit/:id' element={<EditProduct/>}/>
           </Route>
         </Routes>

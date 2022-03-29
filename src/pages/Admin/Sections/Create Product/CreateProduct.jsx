@@ -4,15 +4,14 @@ import validateProductForm from "../../../../helpers/validateProductForm";
 import { useContext } from "react";
 import { AppContext } from "../../../../App";
 import FormInput from "../../Components/FormInput/FormInput";
+import ProductCard from "../../../../components/CardSchemas/ProductCard";
 
-export default function CreateProduct(){
+export default function CreateProduct({action, product}){
 
     const {dispatch} = useContext(AppContext)
-
-    const [image, setImage] = useState(null)
+    
     const [errors, setErrors] = useState({})
-
-    const [productData, setProductData] = useState({})
+    const [productData, setProductData] = useState(product||{})
 
     useEffect(()=>{
         if(Object.keys(productData).length) setErrors(validateProductForm(productData))
@@ -21,8 +20,11 @@ export default function CreateProduct(){
     function handleSubmit(e){
         e.preventDefault();
         const validation = validateProductForm(productData);
-        if(!validation) dispatch({type:'addProduct', productData})
-        else setErrors(validation)
+        if(!validation) {
+            dispatch({type:action==='edit'?'editProduct':'addProduct', productData})
+            alert('Product '+(action==='edit'?'edited':'added'))
+        }
+        else {setErrors(validation)}
     }
 
     function handleInput(e){
@@ -33,7 +35,7 @@ export default function CreateProduct(){
     }
 
     function flashError(e){
-        let prev = e.target.style.backgroundColor||'transparent';
+        let prev = e.target.style.backgroundColor;
         if(Object.keys(errors).length){
             e.target.style.backgroundColor = 'red'
             setTimeout(()=>{e.target.style.backgroundColor = prev},1000)
@@ -41,41 +43,37 @@ export default function CreateProduct(){
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>Create Product</h1>
-            <ProductForm>
+        <Preview>
+            <ProductCard product={productData}/>
+            <form onSubmit={handleSubmit}>
+                <h1>{product?'Edit':'Create'} Product</h1>
+                <ProductForm>
 
-                <FormInput name="title" type="text" placeholder="Title" error={errors} eventHandlers={{onChange:handleInput}}/>
+                    <FormInput name="title" type="text" placeholder="Title" error={errors} text={productData.title} eventHandlers={{onChange:handleInput}}/>
 
-                <FormInput name="description" area type="text" placeholder="Description" error={errors} eventHandlers={{
-                        onChange:e=>{
-                            handleInput(e)
-                            e.target.style.height='auto'
-                            e.target.style.height=e.target.scrollHeight+'px';
-                            e.target.style.overflowY='hidden'
-                }}}/>
+                    <FormInput name="description" area type="text" placeholder="Description" text={productData.description} error={errors} eventHandlers={{
+                            onChange:e=>{
+                                handleInput(e)
+                                e.target.style.height='auto'
+                                e.target.style.height=e.target.scrollHeight+'px';
+                                e.target.style.overflowY='hidden'
+                    }}}/>
 
-                <FormInput name='price' type='number' placeholder='Price' error={errors} eventHandlers={{
-                        onChange:e=>{
-                            if(e.target.value<0)e.target.value=e.nativeEvent.data
-                            e.target.value=e.target.valueAsNumber
-                            handleInput(e)
-                        },
-                        onKeyPress:e=>{if(e.key==='-')e.target.value=''}
-                }}/>
+                    <FormInput name='price' type='number' placeholder='Price' text={productData.price} error={errors} eventHandlers={{
+                            onChange:e=>{
+                                if(e.target.value<0)e.target.value=e.nativeEvent.data
+                                e.target.value=e.target.valueAsNumber
+                                handleInput(e)
+                            },
+                            onKeyPress:e=>{if(e.key==='-')e.target.value=''}
+                    }}/>
 
-                <FormInput name='image' type='text' placeholder='Image URL' error={errors} eventHandlers={{
-                        onChange:e=>{
-                            document.getElementById('imagePreview').style.display = 'unset'
-                            setImage(e.target.value)
-                            handleInput(e)
-                }}}/>
+                    <FormInput name='image' type='text' placeholder='Image URL' text={productData.image} error={errors} eventHandlers={{onChange:handleInput}}/>
 
-                <img src={image} id='imagePreview' alt="productImage" onChange={handleInput} onError={(e)=>e.target.style.display='none'}/>
-
-                <FormInput type='submit' value='Create Product' eventHandlers={{onClick:flashError}}/>
-            </ProductForm>
-        </form>
+                    <FormInput type='submit' text={(product?'Edit':'Create')+' Product'} eventHandlers={{onClick:flashError}}/>
+                </ProductForm>
+            </form>
+        </Preview>
     )
 }
 
@@ -84,7 +82,16 @@ const ProductForm = styled.div`
     flex-direction: column;
     img{
         width: 30%;
-        display: none;
         margin:auto;
+    }
+`
+
+const Preview = styled.div`
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-evenly;
+    form{
+        width: 50%;
     }
 `

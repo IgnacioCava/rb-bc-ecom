@@ -1,24 +1,17 @@
-import { useContext, useState, useEffect } from "react"
+import { useContext } from "react"
 import { AppContext } from "../../../../App"
 import { useParams } from "react-router-dom"
+import CreateProduct from "../Create Product/CreateProduct"
 
 export default function EditProduct(){
 
-    const {state, dispatch} = useContext(AppContext)
+    const {state} = useContext(AppContext)
     const {id} = useParams()
-
     
     let product = state.find(product=>product.id===Number(id))
     if(product)
     return (
-        <form>
-            {Object.entries(product)?.map(([key, value])=>
-            <div>
-                <label htmlFor={key}>{key}</label>
-                <input type='text' name={key} value={value}/>
-            </div>
-            )}
-        </form>
+        <CreateProduct action='edit' product={product}/>
     ) 
     else return null
 }
