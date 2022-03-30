@@ -1,5 +1,3 @@
-import ProductCard from '../../components/CardSchemas/ProductCard'
-import styled from 'styled-components'
 import ProductsHolder from '../../components/ProductsHolder/ProductsHolder'
 import { useContext } from "react";
 import { AppContext } from '../../Store';

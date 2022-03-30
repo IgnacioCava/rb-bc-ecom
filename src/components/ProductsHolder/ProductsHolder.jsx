@@ -1,5 +1,5 @@
 import ProductCard from "../CardSchemas/ProductCard"
-import { useCallback, useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo } from "react"
 import autoWheelScroll from "../../helpers/autoWheelScroll"
 import Searchbar from "../Searchbar/Searchbar"
 import hightlightSelectedOption from "../../helpers/hightlightSelectedOption"

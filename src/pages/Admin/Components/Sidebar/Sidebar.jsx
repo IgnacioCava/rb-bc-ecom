@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import arrow from '../../../../assets/images/arrow.png'
 import hightlightSelectedOption from "../../../../helpers/hightlightSelectedOption";
 import { SidebarWrapper, Side, Widget, Options} from "./SidebarStyled";
