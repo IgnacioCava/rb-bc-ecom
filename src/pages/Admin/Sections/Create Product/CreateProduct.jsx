@@ -1,10 +1,10 @@
-import styled from "styled-components"
 import {useEffect, useState} from "react"
 import validateProductForm from "../../../../helpers/validateProductForm";
 import { useContext } from "react";
-import { AppContext } from "../../../../App";
+import { AppContext } from "../../../../Store";
 import FormInput from "../../Components/FormInput/FormInput";
 import ProductCard from "../../../../components/CardSchemas/ProductCard";
+import { ProductForm, Creation, Preview } from './CreateProductStyled'
 
 export default function CreateProduct({action, product}){
 
@@ -43,8 +43,10 @@ export default function CreateProduct({action, product}){
     }
 
     return (
-        <Preview>
-            <ProductCard product={productData}/>
+        <Creation>
+            <Preview>
+                <ProductCard product={productData}/>
+            </Preview>
             <form onSubmit={handleSubmit}>
                 <h1>{product?'Edit':'Create'} Product</h1>
                 <ProductForm>
@@ -73,25 +75,6 @@ export default function CreateProduct({action, product}){
                     <FormInput type='submit' text={(product?'Edit':'Create')+' Product'} eventHandlers={{onClick:flashError}}/>
                 </ProductForm>
             </form>
-        </Preview>
+        </Creation>
     )
 }
-
-const ProductForm = styled.div`
-    display: flex;
-    flex-direction: column;
-    img{
-        width: 30%;
-        margin:auto;
-    }
-`
-
-const Preview = styled.div`
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-evenly;
-    form{
-        width: 50%;
-    }
-`

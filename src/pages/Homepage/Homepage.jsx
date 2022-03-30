@@ -2,11 +2,12 @@ import ProductCard from '../../components/CardSchemas/ProductCard'
 import styled from 'styled-components'
 import ProductsHolder from '../../components/ProductsHolder/ProductsHolder'
 import { useContext } from "react";
-import { AppContext } from '../../App';
+import { AppContext } from '../../Store';
+import { Home } from './HomepageStyled'
 
 export default function Homepage(){
 
-    const {state, dispatch} = useContext(AppContext)
+    const {state} = useContext(AppContext)
 
     return (
         <Home>
@@ -16,6 +17,3 @@ export default function Homepage(){
     )
 }
 
-const Home = styled.div`
-
-`

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import {ProductInput, ProductDesc, Submit, InputHolder, Error} from './FormInputStyled'
 
 export default function FormInput(props){
     const {name, type, placeholder, error, eventHandlers, area, text} = props
@@ -7,7 +7,7 @@ export default function FormInput(props){
     return (
         <InputHolder>
             {type==='submit'
-                ?<ProductInput style={{backgroundColor:'#6767ff', color:'white', fontWeight:'bold', cursor:'pointer'}} type={type} value='Create Product' {...eventHandlers}/>
+                ?<Submit type={type} value={text} {...eventHandlers}/>
                 :<>
                     <label htmlFor={name}>{placeholder}</label>
                     {area
@@ -19,37 +19,3 @@ export default function FormInput(props){
         </InputHolder>
     )
 }
-
-const ProductInput = styled.input`
-    &::-webkit-inner-spin-button,&::-webkit-outer-spin-button{-webkit-appearance: none;}
-`
-    
-const ProductDesc = styled.textarea`
-    font-family: Arial, Helvetica, sans-serif;
-    resize:none;
-`
-
-const InputHolder = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding:10px;
-    box-sizing: border-box;
-    align-items: flex-start;
-    width: 100%;
-    ${ProductDesc},${ProductInput}{
-        padding: 10px;
-        width: 100%;
-        box-sizing: border-box;
-        transition: 1s;
-        border:0;
-        outline:0;
-        background-color: white;
-    }
-`
-
-const Error=styled.span`
-    color:red;
-    font-size:14px;
-    margin-top:5px;
-    font-weight: bold;
-`

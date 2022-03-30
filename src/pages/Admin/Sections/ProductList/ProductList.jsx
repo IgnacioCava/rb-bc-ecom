@@ -1,12 +1,10 @@
-import styled from "styled-components"
-import {useEffect, useState} from "react"
 import { useContext } from "react";
-import { AppContext } from "../../../../App";
+import { AppContext } from "../../../../Store";
 import ProductsHolder from "../../../../components/ProductsHolder/ProductsHolder";
-
+import { List } from "./ProductListStyled";
 export default function ProductList(){
 
-    const {state, dispatch} = useContext(AppContext)
+    const {state} = useContext(AppContext)
 
     return (
         <List>
@@ -14,7 +12,3 @@ export default function ProductList(){
         </List>
     )
 }
-
-const List = styled.div`
-    margin-top:5%
-`

@@ -1,6 +1,6 @@
 import Sidebar from "./Components/Sidebar/Sidebar";
-import styled from "styled-components";
 import { Outlet } from "react-router-dom";
+import { AdminWrapper, PanelWrapper} from './AdminPanelStyled'
 
 export default function AdminPanel(){
     return (
@@ -13,12 +13,3 @@ export default function AdminPanel(){
     )
 }
 
-const AdminWrapper = styled.div`
-    display: flex;
-    height: 90%;
-`
-
-const PanelWrapper = styled.div`
-    overflow: auto;
-    width: 100%;
-`
