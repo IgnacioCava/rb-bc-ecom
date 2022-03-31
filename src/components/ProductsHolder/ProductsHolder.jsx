@@ -1,66 +1,54 @@
 import ProductCard from "../CardSchemas/ProductCard"
-import styled from "styled-components"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import autoWheelScroll from "../../helpers/autoWheelScroll"
+import Searchbar from "../Searchbar/Searchbar"
+import hightlightSelectedOption from "../../helpers/hightlightSelectedOption"
+import {Empty, Holder, Divisor, Scrolls, SectionWrapper, Controls} from './ProductsHolderStyled'
 
-export default function ProductHolder({products}){
+export default function ProductHolder({products, admin}){
 
     const [scrollType, setType] = useState('page')
+    const [search, setSearch] = useState()
 
     useEffect(()=>{
-        Array.from(document.getElementsByClassName('scrolltype')).map(button=>button.innerText.toLowerCase()===scrollType?button.style.backgroundColor='lightgrey':button.style.backgroundColor='transparent')
-    }, [scrollType])
+        hightlightSelectedOption('scrolltype', 'innerText', scrollType, 'lightgrey')
+    },[scrollType])
+
+    const filteredProducts = useMemo(()=>{
+        return products.filter(e=>(search?e.title.includes(search):e)&&(admin?e:e.disabled===false))
+    }, [search, products, admin])
 
     return (
         <SectionWrapper>
-            <span>Scroll by: 
-                {['Page', 'Product'].map(type =>
-                <Scrolls 
-                    type='button'
-                    className="scrolltype" 
-                    onClick={()=>setType(type.toLowerCase())}>
-                    {type}
-                </Scrolls>
-                )}
-            </span>
-            <Holder id='holder' onWheel={(e)=>{autoWheelScroll(e, 'holder', 'x', scrollType)}}>
-                {products.map(product => {
+            <Controls>
+                <span>Scroll by: 
+                    {['Page', 'Product'].map(type =>
+                    <Scrolls 
+                        type='button'
+                        className="scrolltype"
+                        key={type}
+                        onClick={()=>setType(type.toLowerCase())}
+                    >
+                        {type}
+                    </Scrolls>
+                    )}
+                </span>
+                <Searchbar search={setSearch}/>
+            </Controls>
+            
+            <Holder id='holder' onWheel={(e)=>{if(e.target.className.includes('wrapper')) autoWheelScroll(e, 'holder', 'x', scrollType)}}>
+                {filteredProducts.length?filteredProducts.map(product => {
                     return (
-                        <ProductCard title={product} key={product.id}/>
+                        <Divisor className="wrapper" key={product.id}>
+                            <ProductCard
+                                id={product.id}
+                                admin={admin} 
+                                product={product}  
+                            />
+                        </Divisor>
                     )
-                })}
+                }):<Empty>No products found</Empty>}
             </Holder>
         </SectionWrapper>
-        
     )
 }
-
-const Holder = styled.div`
-    display: inline-flex;
-    overflow: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-snap-stop:always;
-    scroll-behavior: smooth;
-`
-
-const Scrolls = styled.button`
-    border: none;
-    padding: 5px;
-    border-radius: 5px;
-    transition: .4s;
-    cursor:pointer;
-`
-
-const SectionWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    width:80%;
-    margin: auto;
-    background-color: white;
-    padding:10px;
-    span{
-        text-align: start;
-        display: flex;
-        gap:10px;
-    }
-`

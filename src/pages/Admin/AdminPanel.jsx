@@ -1,17 +1,15 @@
 import Sidebar from "./Components/Sidebar/Sidebar";
-import Panel from "./Components/Panel/Panel";
-import styled from "styled-components";
+import { Outlet } from "react-router-dom";
+import { AdminWrapper, PanelWrapper} from './AdminPanelStyled'
 
 export default function AdminPanel(){
     return (
         <AdminWrapper>
             <Sidebar/>
-            <Panel/>
+            <PanelWrapper>
+                <Outlet />
+            </PanelWrapper>
         </AdminWrapper>
     )
 }
 
-const AdminWrapper = styled.div`
-    display: flex;
-    height: 90%;
-`

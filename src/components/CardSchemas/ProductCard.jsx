@@ -1,49 +1,32 @@
 import { Link } from "react-router-dom"
-import styled from "styled-components"
+import { useContext } from "react";
+import { AppContext } from "../../Store";
 import noImage from "../../assets/images/defaultProductImage.png"
+import priceFormat from "../../helpers/priceFormat";
+import { Image, Card, Toggle, Options, Title, Price, Description, Data } from './ProductCardStyled'
 
-export default function ProductCard({title}){
+export default function ProductCard({product, admin}){
+
+    const {dispatch} = useContext(AppContext)
+
     return (
         <Card>
-            <Wrapper>
-                <Image src={noImage} alt="noImage"/>
+                {admin
+                ?<Options>
+                    <Toggle toggled={product.disabled} onClick={()=>dispatch({type:'toggleProduct', id:product.id})}>{product.disabled?'Disabled':'Enabled'}</Toggle>
+                    <Link to={`edit/${product.id}`}>
+                        <Toggle>Edit</Toggle>
+                    </Link>
+                </Options>
+                :null}
+                <Image src={product?.image||noImage} alt="noImage" onError={e=>e.target.src=noImage}/>
                 <hr/>
-                <h1>{title}</h1>
-            </Wrapper>
+                <Data>
+                    <Price>{(product.price&&'$'+priceFormat(product.price))||'Price'}</Price>
+                    <hr/>
+                    <Title>{product.title||'Title'}</Title>
+                    <Description>{product.description||'Description'}</Description>
+                </Data>
         </Card>
     )
 }
-
-const Card = styled.div`
-    min-width: 20%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    scroll-snap-align: center;
-    align-items: center;
-    padding:20px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    
-    hr{
-        margin:0;
-        border:1px solid #e9e9e9;
-        width: 100%;
-    }
-`
-
-const Image = styled.img`
-    width: 100%;
-`
-
-const Wrapper = styled.div`
-    background-color: #fff;
-    width: 100%;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-    transition: .4s;
-    &:hover{
-        transform: scale(105%);
-        box-shadow: 1px 6px 10px 2px rgb(0 0 0 / 50%);
-    }
-`
