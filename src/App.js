@@ -1,25 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import Homepage from './pages/Homepage/Homepage';
+import AdminPanel from './pages/Admin/AdminPanel';
+import Navbar from './components/Navbar/Navbar';
+import {Routes, Route} from 'react-router-dom';
+import CreateProduct from './pages/Admin/Sections/Create Product/CreateProduct';
+import ProductList from './pages/Admin/Sections/ProductList/ProductList';
+import React from 'react';
+import EditProduct from './pages/Admin/Sections/Edit Product/EditProduct';
+import useStore from './Store';
 
-function App() {
+export default function App() {
+
+  const [currentContext, AppContext] = useStore()
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <Navbar/>
+        <AppContext.Provider value={currentContext}>
+          <Routes>
+            <Route path='/' element={<Homepage/>}/>
+            <Route path='/admin' element={<AdminPanel/>}>
+              <Route index path='*' element={<ProductList/>}/>
+              <Route path='addproduct' element={<CreateProduct action='create'/>}/>
+              <Route path='edit/:id' element={<EditProduct/>}/>
+            </Route>
+          </Routes>
+        </AppContext.Provider>
+      </div>
   );
 }
-
-export default App;
