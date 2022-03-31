@@ -39,15 +39,13 @@ export default function ProductHolder({products, admin}){
             <Holder id='holder' onWheel={(e)=>{if(e.target.className.includes('wrapper')) autoWheelScroll(e, 'holder', 'x', scrollType)}}>
                 {filteredProducts.length?filteredProducts.map(product => {
                     return (
-                        <Divisor className="wrapper">
+                        <Divisor className="wrapper" key={product.id}>
                             <ProductCard
                                 id={product.id}
                                 admin={admin} 
-                                product={product}
-                                key={product.id} 
+                                product={product}  
                             />
                         </Divisor>
-                        
                     )
                 }):<Empty>No products found</Empty>}
             </Holder>
