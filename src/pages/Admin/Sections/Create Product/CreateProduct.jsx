@@ -18,11 +18,8 @@ export default function CreateProduct({action, product}){
         if(Object.keys(productData).length) setErrors(validateProductForm(productData))
     },[productData])
 
-    console.log(productData)
-
     function handleSubmit(e){
         e.preventDefault();
-        console.log(1)
         const validation = validateProductForm(productData);
         if(!validation) {
             dispatch({type:action==='edit'?'editProduct':'addProduct', productData})

@@ -8,13 +8,11 @@ import {Empty, Holder, Divisor, Scrolls, SectionWrapper, Controls} from './Produ
 export default function ProductHolder({products, admin}){
 
     const [scrollType, setType] = useState('page')
-    const [searched, setSearch] = useState([])
+    const [searched, setSearch] = useState(admin?products:products.filter(e=>!e.disabled))
 
     useEffect(()=>{
         hightlightSelectedOption('scrolltype', 'innerText', scrollType, 'lightgrey')
     },[scrollType])
-
-    console.log(searched)
 
     return (
         <SectionWrapper>
@@ -35,7 +33,7 @@ export default function ProductHolder({products, admin}){
             </Controls>
             
             <Holder id='holder' onWheel={(e)=>{if(e.target.className.includes('wrapper')) autoWheelScroll(e, 'holder', 'x', scrollType)}}>
-                {searched!=='Empty'?searched.map(product => {
+                {searched.length?searched.map(product => {
                     return (
                         <Divisor className="wrapper" key={product.id}>
                             <ProductCard

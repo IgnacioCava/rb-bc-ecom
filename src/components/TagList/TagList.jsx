@@ -2,7 +2,6 @@ import { Tag, TagList } from "../../pages/Admin/Components/FormInput/TagInputSty
 
 export default function TagMapper({tags, action}) {
 
-    
     if(tags) return (
         <TagList>
         {tags.map(tag=>(

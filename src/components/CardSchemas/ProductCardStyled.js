@@ -43,6 +43,7 @@ export const Toggle = styled.button`
 export const Options = styled.div`
     display: flex;
     width: 80%;
+    gap: 5px;
     margin:auto;
     padding:5px;
     justify-content: space-evenly;

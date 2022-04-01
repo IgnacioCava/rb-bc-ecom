@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ProductInput } from "./FormInputStyled"
 import { Tag, TagList, TagsWrapper } from "./TagInputStyled"
 import TagMapper from "../../../../components/TagList/TagList"
@@ -6,10 +6,6 @@ import TagMapper from "../../../../components/TagList/TagList"
 export default function TagInput({name, placeholder, passTags}) {
 
     const [tags, setTag] = useState([])
-
-    useEffect(()=>{
-        passTags({name, value:tags})
-    }, [tags])
 
     function formattedTag(tag) {
         tag = tag.trim()
@@ -22,11 +18,10 @@ export default function TagInput({name, placeholder, passTags}) {
 
         if(!tags.includes(tag) && e.key==='Enter') {
             setTag([...tags, tag])
+            passTags({name, value:tags})
             e.target.value=''
         } 
-        // else if(e.key==='Backspace' && !e.target.value) {
-        //     setTag(tags.slice(0, tags.length-1))
-        // }
+
         if(tags.includes(tag) && e.key==='Enter'){
             const input = document.getElementById(tag)
             input.style.backgroundColor='#ff4d4d'
@@ -36,17 +31,18 @@ export default function TagInput({name, placeholder, passTags}) {
 
     function removeTag(e){
         setTag(tags.filter(tag=>tag!==e))
+        passTags({name, value:tags})
     }
 
     return (
         <TagsWrapper>
             <TagList>
-                {tags.map((tag)=>(
-                    <Tag key={tag} id={tag}>
+                {tags.map((tag,i)=>(
+                    <Tag key={i} id={tag}>
                         <button onClick={()=>removeTag(tag)}>X</button>
                         <span>{tag}</span>
-                    </Tag>)
-                )}
+                    </Tag>
+                ))}
             </TagList>
             <ProductInput name={name} placeholder={placeholder} type='text' onKeyDown={addTag}/>
         </TagsWrapper>

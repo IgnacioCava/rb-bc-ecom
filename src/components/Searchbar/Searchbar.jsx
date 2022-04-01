@@ -7,24 +7,19 @@ export default function Searchbar({onSearch, elements, conditions, restrictions}
     const [focus, setFocus] = useState(false)
     const [selectedEntry, setEntry] = useState('description')
 
-    useEffect(()=>{
-        handleInput()
-    },[])
-
     const entries = useMemo(()=>{
         return reduceEntries(elements, restrictions)
     },[elements, restrictions])
 
     function handleInput(e){
         const searched = e?.target.value||''
-        console.log(searched)
         const filteredProducts = elements.filter(element=>
             e? element[selectedEntry].toString().toLowerCase().includes(searched):true
             &&
             conditions? Object.entries(conditions).every(([key, value])=>element[key]===value):true // Checks if the element's values equal that of the conditions'
 
         )
-        onSearch(filteredProducts.length?filteredProducts:'Empty')
+        onSearch(filteredProducts)
     }
 
     return (
@@ -34,7 +29,7 @@ export default function Searchbar({onSearch, elements, conditions, restrictions}
                 <div>
                     <span>by</span>
                     <select onClick={(e)=>setEntry(e.target.value)}>
-                        {entries.map(key=><option key={key} >{key}</option>)}
+                        {entries.map((key,i)=><option key={i}>{key}</option>)}
                     </select>
                 </div>
                 :null}
