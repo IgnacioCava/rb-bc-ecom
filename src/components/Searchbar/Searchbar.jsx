@@ -11,7 +11,6 @@ export default function Searchbar({onSearch, elements, conditions, restrictions}
         handleInput()
     },[])
 
-
     const entries = useMemo(()=>{
         return reduceEntries(elements, restrictions)
     },[elements, restrictions])
