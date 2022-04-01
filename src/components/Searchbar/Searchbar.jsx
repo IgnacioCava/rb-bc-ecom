@@ -6,7 +6,6 @@ export default function Searchbar({onSearch, elements, conditions, restrictions}
 
     const [focus, setFocus] = useState(false)
     const [selectedEntry, setEntry] = useState('description')
-    const [inputType, setInputType] = useState('text')
 
     useEffect(()=>{
         handleInput()
