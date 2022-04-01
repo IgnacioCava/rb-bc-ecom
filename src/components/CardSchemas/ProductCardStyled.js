@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const Image = styled.img`
-    min-height: 50%;
+    min-height: 40%;
     max-height: 60%;
     width: 100%;
     object-fit: cover;
@@ -69,8 +69,9 @@ export const Data = styled.div`
     padding:15px;
     box-sizing: border-box;
     align-items: flex-start;
+    gap:10px;
     span{
         word-break: break-all;
-    text-align: start;
+        text-align: start;
     }
 `

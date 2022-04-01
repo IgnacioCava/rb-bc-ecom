@@ -12,6 +12,25 @@ export const SearchForm = styled.form`
     &:hover{
         box-shadow: 1px 3px 3px 2px #ccc;
     }
+    div{
+        display: flex;
+        border-left: 1px solid grey;
+        color: grey;
+        select{
+            border: 0;
+            height: 100%;
+            outline: none; 
+            color: inherit;
+        }
+        span{
+            
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13.3px;
+            align-items: center;
+            padding-left:5px;
+        }
+    }
+    
 `
 
 export const SearchInput = styled.input`

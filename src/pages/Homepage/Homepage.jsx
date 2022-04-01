@@ -6,7 +6,7 @@ import { Home } from './HomepageStyled'
 export default function Homepage(){
 
     const {state} = useContext(AppContext)
-
+    console.log(state)
     return (
         <Home>
             <h1>Homepage</h1>

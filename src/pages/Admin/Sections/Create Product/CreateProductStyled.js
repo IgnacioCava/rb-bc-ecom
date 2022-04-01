@@ -17,8 +17,12 @@ export const Creation = styled.div`
     width: 100%;
     height: 100%;
     form{
-        height: 100%;
+        height: 90%;
         width: 40%;
+        overflow:auto;
+        ::-webkit-scrollbar{
+            display:none;
+        }
     }
 `
 
