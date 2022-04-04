@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { ProductInput } from "./FormInputStyled"
 import { Tag, TagList, TagsWrapper } from "./TagInputStyled"
-import TagMapper from "../../../../components/TagList/TagList"
 
 export default function TagInput({name, placeholder, passTags}) {
 
     const [tags, setTag] = useState([])
+
+    useEffect(()=>{
+        passTags({name, value:tags})
+    },[tags])
 
     function formattedTag(tag) {
         tag = tag.trim()
@@ -18,7 +21,6 @@ export default function TagInput({name, placeholder, passTags}) {
 
         if(!tags.includes(tag) && e.key==='Enter') {
             setTag([...tags, tag])
-            passTags({name, value:tags})
             e.target.value=''
         } 
 
@@ -31,7 +33,6 @@ export default function TagInput({name, placeholder, passTags}) {
 
     function removeTag(e){
         setTag(tags.filter(tag=>tag!==e))
-        passTags({name, value:tags})
     }
 
     return (
