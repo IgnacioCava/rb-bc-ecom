@@ -1,6 +1,6 @@
-import React, {useReducer, useMemo} from 'react';
+import {useReducer, useMemo, createContext} from 'react';
 
-export const AppContext = React.createContext()
+export const AppContext = createContext()
 
 const initialState = []
 const productReducer = (state, action) => {
