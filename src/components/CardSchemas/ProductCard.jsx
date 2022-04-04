@@ -20,7 +20,7 @@ export default function ProductCard({product, admin, onImageError}){
                 </Link>
             </Options>
             :null}
-            <Image id='image' src={product?.image || noImage} alt="noImage" onError={e=>{
+            <Image src={product?.image || noImage} alt="noImage" onError={e=>{
                 e.target.src=noImage
                 onImageError()
                 }}/>

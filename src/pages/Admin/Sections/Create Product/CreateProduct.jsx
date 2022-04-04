@@ -14,6 +14,8 @@ export default function CreateProduct({action, product}){
     const [errors, setErrors] = useState({})
     const [productData, setProductData] = useState(product||{})
 
+    
+
     useEffect(()=>{
         setErrors(validateProductForm(productData))
     }, [productData])

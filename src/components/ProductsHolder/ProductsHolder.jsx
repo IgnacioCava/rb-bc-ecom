@@ -1,5 +1,5 @@
 import ProductCard from "../CardSchemas/ProductCard"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef, useMemo, createRef} from "react"
 import autoWheelScroll from "../../helpers/autoWheelScroll"
 import Searchbar from "../Searchbar/Searchbar"
 import hightlightSelectedOption from "../../helpers/hightlightSelectedOption"
@@ -9,20 +9,23 @@ export default function ProductHolder({products, admin}){
 
     const [scrollType, setType] = useState('page')
     const [searched, setSearch] = useState(admin?products:products.filter(e=>!e.disabled))
+    const scroll = useRef(null)
+    const optionsRef = useMemo(() => [createRef(), createRef()], [])
 
     useEffect(()=>{
-        hightlightSelectedOption('scrolltype', 'innerText', scrollType, 'lightgrey')
-    },[scrollType])
+        hightlightSelectedOption(optionsRef.map(e=>e.current), 'innerText', scrollType, 'lightgrey')
+    },[scrollType, optionsRef])
 
     return (
         <SectionWrapper>
             <Controls>
                 <span>Scroll by: 
-                    {['Page', 'Product'].map(type =>
+                    {['Page', 'Product'].map((type,i) =>
                     <Scrolls 
                         type='button'
                         className="scrolltype"
                         key={type}
+                        ref={optionsRef[i]}
                         onClick={()=>setType(type.toLowerCase())}
                     >
                         {type}
@@ -32,12 +35,11 @@ export default function ProductHolder({products, admin}){
                 <Searchbar elements={products} onSearch={setSearch} conditions={admin??{disabled: false}} restrictions={admin?[]:['id','disabled','image']}/>
             </Controls>
             
-            <Holder id='holder' onWheel={(e)=>{if(e.target.className.includes('wrapper')) autoWheelScroll(e, 'holder', 'x', scrollType)}}>
+            <Holder ref={scroll} onWheel={(e)=>{if(e.target.className.includes('wrapper')) autoWheelScroll(e, scroll.current, 'x', scrollType)}}>
                 {searched.length?searched.map(product => {
                     return (
                         <Divisor className="wrapper" key={product.id}>
                             <ProductCard
-                                id={product.id}
                                 admin={admin} 
                                 product={product}  
                             />

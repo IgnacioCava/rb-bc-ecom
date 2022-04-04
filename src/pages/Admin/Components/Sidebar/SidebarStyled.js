@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const SidebarWrapper = styled.div`
     display: flex;
     width: ${props => props.open ? '20%' : '0%'};
-    &,*{transition: .5s ease-in-out;}
+    &,*{transition: .3s ease-in-out;}
     height: 100%;
     white-space: nowrap;
 `
@@ -12,7 +12,7 @@ export const Side = styled.div`
     width: ${props => props.open ? '100%' : '0%'};
     background-color: #b3d0ff;
     overflow: hidden;
-    transition: .5s ease-in-out;
+    transition: .3s ease-in-out;
     
 `
 
@@ -29,7 +29,7 @@ export const Widget = styled.div`
     overflow: hidden;
     padding:5px;
     box-sizing: border-box;
-    transition: .5s ease-in-out;
+    transition: .3s ease-in-out;
     background-color: ${props => props.open ? '#8282ff' : '#c0c0ff'};
     border-radius: 0 0 10px 0;
 `

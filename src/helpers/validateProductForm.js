@@ -6,13 +6,11 @@ export default function validateProductForm(values) {
         ? 'A title is required' 
         : 'Title must be at least 3 characters long'
     }
-
     if (values.price && Number(values.price) < 0) {
         errors.price = values.price === '' 
         ? 'The price is required' 
         : 'Must be greater than 0'
     }
-    
     if (values.description?.length < 5) {
         errors.description = values.description === '' 
         ? 'Please write a description' 
