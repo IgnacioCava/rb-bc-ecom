@@ -22,7 +22,7 @@ export default function TagInput({name, placeholder, passTags}) {
         if(!tags.includes(tag) && e.key==='Enter') {
             setTag([...tags, tag])
             e.target.value=''
-        } 
+        }  
 
         if(tags.includes(tag) && e.key==='Enter'){
             const input = document.getElementById(tag)
