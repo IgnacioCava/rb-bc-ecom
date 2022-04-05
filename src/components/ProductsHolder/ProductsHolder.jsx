@@ -1,5 +1,5 @@
 import ProductCard from "../CardSchemas/ProductCard"
-import { useEffect, useState, useRef, useMemo, createRef} from "react"
+import { useEffect, useState, useRef, createRef} from "react"
 import autoWheelScroll from "../../helpers/autoWheelScroll"
 import Searchbar from "../Searchbar/Searchbar"
 import hightlightSelectedOption from "../../helpers/hightlightSelectedOption"
@@ -10,11 +10,11 @@ export default function ProductHolder({products, admin}){
     const [scrollType, setType] = useState('page')
     const [searched, setSearch] = useState(admin?products:products.filter(e=>!e.disabled))
     const scroll = useRef(null)
-    const optionsRef = useMemo(() => [createRef(), createRef()], [])
+    const optionsRef = [createRef(), createRef()]
 
     useEffect(()=>{
         hightlightSelectedOption(optionsRef.map(e=>e.current), 'innerText', scrollType, 'lightgrey')
-    },[scrollType, optionsRef])
+    },[scrollType])
 
     return (
         <SectionWrapper>

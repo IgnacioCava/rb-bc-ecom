@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useState, useEffect, useMemo, createRef } from "react";
+import { useState, useEffect, createRef } from "react";
 import arrow from '../../../../assets/images/arrow.png'
 import hightlightSelectedOption from "../../../../helpers/hightlightSelectedOption";
 import { SidebarWrapper, Side, Widget, Options} from "./SidebarStyled";
@@ -9,11 +9,11 @@ export default function Sidebar(){
     const [page, setPage] = useState(window.location.pathname);
     const [open, setOpen] = useState(true);
 
-    const optionsRef = useMemo(() => [createRef(), createRef()], [])
+    const optionsRef = [createRef(), createRef()]
 
     useEffect(()=>{
         hightlightSelectedOption(optionsRef.map(e=>e.current), 'pathname', page, 'white')
-    },[page, optionsRef])
+    },[page])
 
     // useEffect(()=>{
     //     hightlightSelectedOption('options', 'pathname', page, '#ffffff')
