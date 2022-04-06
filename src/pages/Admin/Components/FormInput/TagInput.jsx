@@ -1,11 +1,15 @@
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState, createRef, useMemo } from "react"
 import { ProductInput } from "./FormInputStyled"
 import { Tag, TagList, TagsWrapper } from "./TagInputStyled"
-import TagMapper from "../../../../components/TagList/TagList"
 
 export default function TagInput({name, placeholder, passTags}) {
 
     const [tags, setTag] = useState([])
+    const tagRef = useMemo(() => tags.map(createRef), [tags])
+
+    useEffect(()=>{
+        passTags({name, value:tags})
+    },[tags])
 
     function formattedTag(tag) {
         tag = tag.trim()
@@ -15,30 +19,28 @@ export default function TagInput({name, placeholder, passTags}) {
     function addTag(e){
         const tag = formattedTag(e.target.value)
         if(!tag) return
-
+        
         if(!tags.includes(tag) && e.key==='Enter') {
             setTag([...tags, tag])
-            passTags({name, value:tags})
             e.target.value=''
-        } 
-
+        }  
+        
         if(tags.includes(tag) && e.key==='Enter'){
-            const input = document.getElementById(tag)
-            input.style.backgroundColor='#ff4d4d'
-            setTimeout(()=>{input.style.backgroundColor=''},1000)
+            const tagElement = tagRef.find(el=>el.current.children[1].innerText===tag).current.style
+            tagElement.backgroundColor='#ff4d4d'
+            setTimeout(()=>{tagElement.backgroundColor=''},1000)
         }
     }
 
     function removeTag(e){
         setTag(tags.filter(tag=>tag!==e))
-        passTags({name, value:tags})
     }
 
     return (
         <TagsWrapper>
             <TagList>
                 {tags.map((tag,i)=>(
-                    <Tag key={i} id={tag}>
+                    <Tag key={i} ref={tagRef[i]}>
                         <button onClick={()=>removeTag(tag)}>X</button>
                         <span>{tag}</span>
                     </Tag>

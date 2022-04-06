@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { SearchForm, SearchInput } from './SearchbarStyled'
 import reduceEntries from '../../helpers/reduceEntries'
 

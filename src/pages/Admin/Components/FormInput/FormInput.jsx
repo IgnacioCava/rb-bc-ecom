@@ -12,7 +12,7 @@ export default function FormInput(props){
                 :<>
                     <label htmlFor={name}>{name.charAt(0).toUpperCase()+name.substring(1)}</label>
                     {tags
-                    ?<TagInput name='tags' placeholder='Press enter to add tags, or backspace to remove them' passTags={eventHandlers.onChange}/>
+                    ?<TagInput name='tags' placeholder={placeholder} passTags={eventHandlers.onChange}/>
                     :area
                         ?<ProductDesc {...data} />
                         :<ProductInput {...data}/>}

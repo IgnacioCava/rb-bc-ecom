@@ -6,7 +6,7 @@ import priceFormat from "../../helpers/priceFormat";
 import { Image, Card, Toggle, Options, Title, Price, Description, Data } from './ProductCardStyled'
 import TagMapper from "../TagList/TagList";
 
-export default function ProductCard({product, admin}){
+export default function ProductCard({product, admin, onImageError}){
 
     const {dispatch} = useContext(AppContext)
 
@@ -20,7 +20,10 @@ export default function ProductCard({product, admin}){
                 </Link>
             </Options>
             :null}
-            <Image src={product?.image || noImage} alt="noImage" onError={e=>e.target.src=noImage}/>
+            <Image src={product?.image || noImage} alt="noImage" onError={e=>{
+                e.target.src=noImage
+                onImageError()
+                }}/>
             <hr/>
             <Data>
                 <Price>{(product.price && '$'+priceFormat(product.price))||'Price'}</Price>
